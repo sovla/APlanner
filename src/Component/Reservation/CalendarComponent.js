@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Alert, StyleSheet, View, Image, Text, Dimensions} from 'react-native';
+import {Alert, StyleSheet, View, Image, Text, Dimensions, ScrollView} from 'react-native';
 import {Calendar} from 'react-native-calendars';
 import {Center} from '../../assets/css/component.style';
 import FooterButton from '../layout/FooterButton';
@@ -107,96 +107,100 @@ export default function CalendarComponent({
                 HeaderTitle="사전점검 방문예약"
                 Notice="방문 날짜를 선택해 주세요"
                 Back={BackFn(navigation)}>
-                <View style={styles.Container}>
-                    <Calendar
-                        current={currentDate}
-                        onDayPress={day => changeDate(day)}
-                        markingType={'period'}
-                        hideExtraDays={true}
-                        markedDates={markedDates}
-                        renderArrow={direction =>
-                            direction === 'left' ? <LeftIcon /> : <RightIcon />
-                        }
-                        dayComponent={({date, state, marking}) => {
-                            const RedDay = new Date(date.dateString).getDay() === 0;
-                            const BlueDay = new Date(date.dateString).getDay() === 6;
-                            let color;
-                            if (marking?.selected) {
-                                color = 'white';
-                            } else if (RedDay) {
-                                color = 'red';
-                            } else if (BlueDay) {
-                                color = 'blue';
-                            } else {
-                                color = 'black';
+                <ScrollView>
+                    <View style={styles.Container}>
+                        <Calendar
+                            current={currentDate}
+                            onDayPress={day => changeDate(day)}
+                            markingType={'period'}
+                            hideExtraDays={true}
+                            markedDates={markedDates}
+                            renderArrow={direction =>
+                                direction === 'left' ? <LeftIcon /> : <RightIcon />
                             }
-                            return (
-                                <View
-                                    style={{
-                                        height: 30,
-                                        width: (screenWidth - 47) / 7,
-                                        backgroundColor: marking?.color ? marking.color : 'white',
-                                        borderTopLeftRadius: marking?.startingDay ? 100 : 0,
-                                        borderBottomLeftRadius: marking?.startingDay ? 100 : 0,
-                                        borderTopRightRadius: marking?.endingDay ? 100 : 0,
-                                        borderBottomRightRadius: marking?.endingDay ? 100 : 0,
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                    }}>
-                                        <View
+                            dayComponent={({date, state, marking}) => {
+                                const RedDay = new Date(date.dateString).getDay() === 0;
+                                const BlueDay = new Date(date.dateString).getDay() === 6;
+                                let color;
+                                if (marking?.selected) {
+                                    color = 'white';
+                                } else if (RedDay) {
+                                    color = 'red';
+                                } else if (BlueDay) {
+                                    color = 'blue';
+                                } else {
+                                    color = 'black';
+                                }
+                                return (
+                                    <View
                                         style={{
-                                            backgroundColor: marking?.selected ? '#0060EE' : null,
-                                            borderRadius: 1000,
-                                            width: 30,
                                             height: 30,
-                                            justifyContent:'center'
-                                        }}
-                                        >
-                                    <Text
-                                        onPress={() => changeDate(date)}
-                                        style={{
-                                            textAlignVertical: 'center',
-                                            textAlign: 'center',
-                                            color: color,
-                                            fontSize: 16,
+                                            width: (screenWidth - 47) / 7,
+                                            backgroundColor: marking?.color
+                                                ? marking.color
+                                                : 'white',
+                                            borderTopLeftRadius: marking?.startingDay ? 100 : 0,
+                                            borderBottomLeftRadius: marking?.startingDay ? 100 : 0,
+                                            borderTopRightRadius: marking?.endingDay ? 100 : 0,
+                                            borderBottomRightRadius: marking?.endingDay ? 100 : 0,
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
                                         }}>
-                                        {date.day}
-                                    </Text>
+                                        <View
+                                            style={{
+                                                backgroundColor: marking?.selected
+                                                    ? '#0060EE'
+                                                    : null,
+                                                borderRadius: 1000,
+                                                width: 30,
+                                                height: 30,
+                                                justifyContent: 'center',
+                                            }}>
+                                            <Text
+                                                onPress={() => changeDate(date)}
+                                                style={{
+                                                    textAlignVertical: 'center',
+                                                    textAlign: 'center',
+                                                    color: color,
+                                                    fontSize: 16,
+                                                }}>
+                                                {date.day}
+                                            </Text>
+                                        </View>
                                     </View>
-                                </View>
-                            );
-                        }}
-                        theme={{
-                            backgroundColor: '#ffffff',
-                            calendarBackground: '#ffffff',
-                            textSectionTitleColor: '#b6c1cd',
-                            todayTextColor: 'black',
-                            dayTextColor: '#2d4150',
-                            arrowColor: theme.colors.black,
-                            monthTextColor: 'black',
-                            indicatorColor: 'blue',
+                                );
+                            }}
+                            theme={{
+                                backgroundColor: '#ffffff',
+                                calendarBackground: '#ffffff',
+                                textSectionTitleColor: '#b6c1cd',
+                                todayTextColor: 'black',
+                                dayTextColor: '#2d4150',
+                                arrowColor: theme.colors.black,
+                                monthTextColor: 'black',
+                                indicatorColor: 'blue',
 
-                            textDayFontWeight: '300',
-                            textMonthFontWeight: 'bold',
-                            textDayHeaderFontWeight: '300',
-                            textDayFontSize: 16,
-                            textMonthFontSize: 16,
-                            textDayHeaderFontSize: 16,
-                        }}></Calendar>
+                                textDayFontWeight: '300',
+                                textMonthFontWeight: 'bold',
+                                textDayHeaderFontWeight: '300',
+                                textDayFontSize: 16,
+                                textMonthFontSize: 16,
+                                textDayHeaderFontSize: 16,
+                            }}></Calendar>
 
-                    <View style={Center}>
-                        <SelectReferenceText
-                            leftColor={theme.colors.blue}
-                            rightColor="#BAE7FF"
-                            leftContent="선택날짜"
-                            rightContent="행사날짜"
-                            depscription={[]}
-                        />
+                        <View style={Center}>
+                            <SelectReferenceText
+                                leftColor={theme.colors.blue}
+                                rightColor="#BAE7FF"
+                                leftContent="선택날짜"
+                                rightContent="행사날짜"
+                                depscription={[]}
+                            />
+                        </View>
                     </View>
-                </View>
+                </ScrollView>
                 <FooterButton onPressButton={onClickNext} buttonContent="다음" />
             </MainContainer>
-            
         </>
     );
 }

@@ -10,7 +10,9 @@ import {
     ToastAndroid,
     BackHandler,
     Platform,
-    Modal,Dimensions
+    Modal,
+    Dimensions,
+    ScrollView,
 } from 'react-native';
 
 import theme from '../assets/css/theme';
@@ -43,7 +45,7 @@ export default function Login({navigation}) {
     const [tel, setTel] = useState('');
     const [selectFacilityNum, setSelectFacilityNum] = useState('');
     const [facilityList, setFacilityList] = useState([]); // 시설리스트
-const [isModal,setIsModal] = useState(false)
+    const [isModal, setIsModal] = useState(false);
     const [user, setUser] = useRecoilState(User);
 
     const [facility, setFacility] = useRecoilState(Facility);
@@ -148,105 +150,127 @@ const [isModal,setIsModal] = useState(false)
             .then(res => res?.data?.result === 'true' && res.data.data)
             .then(data => setFacilityList(data));
     }, []);
-console.log(facilityList,selectFacilityNum)
+    console.log(facilityList, selectFacilityNum);
     return (
         <>
             <MainContainer
                 HeaderTitle="로그인"
                 Notice="고객님의 정보를 입력해 주세요"
                 Back={BackFn(navigation)}>
-                <View style={styles.Container}>
-                    {Platform.OS === 'android' ? (
-                        <Text style={MainButton} onPress={onPressLogin}>
-                            {facility.ft_name}
-                        </Text>
-                    ) : (
-                        <>
-                        <TouchableOpacity onPress={()=>setIsModal(prev => !prev)} style={[styles.Input,styles.PickerContainer]}>
-                            {selectFacilityNum ?(
-                            <Text style={styles.ValueText} >{facilityList.find(item => item.ft_idx === selectFacilityNum).ft_name}</Text>
+                <ScrollView style={{flex: 1}}>
+                    <View style={styles.Container}>
+                        {Platform.OS === 'android' ? (
+                            <Text style={MainButton} onPress={onPressLogin}>
+                                {facility.ft_name}
+                            </Text>
+                        ) : (
+                            <>
+                                <TouchableOpacity
+                                    onPress={() => setIsModal(prev => !prev)}
+                                    style={[styles.Input, styles.PickerContainer]}>
+                                    {selectFacilityNum ? (
+                                        <Text style={styles.ValueText}>
+                                            {
+                                                facilityList.find(
+                                                    item => item.ft_idx === selectFacilityNum,
+                                                ).ft_name
+                                            }
+                                        </Text>
+                                    ) : (
+                                        <Text style={styles.PlaceholderText}>
+                                            아파트를 선택해주세요.
+                                        </Text>
+                                    )}
+                                </TouchableOpacity>
+                            </>
+                        )}
 
-                            ):(
+                        <View>
+                            <View style={styles.InputContainer}>
+                                <TextInput
+                                    style={[styles.Input, styles.BetweenInput]}
+                                    onChangeText={setDong}
+                                    value={dong}
+                                    placeholder="동"
+                                    placeholderTextColor={theme.colors.textGray}
+                                />
+                                <TextInput
+                                    style={[
+                                        styles.Input,
+                                        styles.BetweenInput,
+                                        styles.BetweenLastInput,
+                                    ]}
+                                    onChangeText={setHosu}
+                                    value={hosu}
+                                    placeholder="호수"
+                                    placeholderTextColor={theme.colors.textGray}
+                                />
+                            </View>
+                            <View style={styles.InputContainer}>
+                                <TextInput
+                                    style={[styles.Input, styles.RowInput]}
+                                    onChangeText={setName}
+                                    value={name}
+                                    placeholder="이름"
+                                    placeholderTextColor={theme.colors.textGray}
+                                />
+                            </View>
+                            <View style={styles.InputContainer}>
+                                <TextInput
+                                    style={[styles.Input, styles.RowInput]}
+                                    onChangeText={setTel}
+                                    value={tel}
+                                    placeholder="전화번호"
+                                    placeholderTextColor={theme.colors.textGray}
+                                />
+                            </View>
+                        </View>
+                        <Text style={styles.SubText}>*개인정보필수 입력 확인 동의</Text>
 
-                            <Text style={styles.PlaceholderText} >아파트를 선택해주세요.</Text>
-
-                            )}
-                       
+                        <TouchableOpacity onPress={() => setModalStep(1)}>
+                            <Text style={styles.UnderlineText}>자세히보기</Text>
                         </TouchableOpacity>
-                        
-</>
-                        
-                    )}
-
-                    <View>
-                        <View style={styles.InputContainer}>
-                            <TextInput
-                                style={[styles.Input, styles.BetweenInput]}
-                                onChangeText={setDong}
-                                value={dong}
-                                placeholder="동"
-                            />
-                            <TextInput
-                                style={[styles.Input, styles.BetweenInput, styles.BetweenLastInput]}
-                                onChangeText={setHosu}
-                                value={hosu}
-                                placeholder="호수"
-                            />
-                        </View>
-                        <View style={styles.InputContainer}>
-                            <TextInput
-                                style={[styles.Input, styles.RowInput]}
-                                onChangeText={setName}
-                                value={name}
-                                placeholder="이름"
-                            />
-                        </View>
-                        <View style={styles.InputContainer}>
-                            <TextInput
-                                style={[styles.Input, styles.RowInput]}
-                                onChangeText={setTel}
-                                value={tel}
-                                placeholder="전화번호"
-                            />
-                        </View>
+                        <LoginModal
+                            isVisible={modalStep === 1}
+                            text={facility.terms?.st_agree1}
+                            text1={facility.terms?.st_agree2}
+                            clickButtonComplete={() => setModalStep(0)}
+                            onPressBackArray={onPressBackArray}
+                        />
                     </View>
-                    <Text style={styles.SubText}>*개인정보필수 입력 확인 동의</Text>
+                </ScrollView>
 
-                    <TouchableOpacity onPress={() => setModalStep(1)}>
-                        <Text style={styles.UnderlineText}>자세히보기</Text>
-                    </TouchableOpacity>
-                    <LoginModal
-                        isVisible={modalStep === 1}
-                        text={facility.terms?.st_agree1}
-                        text1={facility.terms?.st_agree2}
-                        clickButtonComplete={() => setModalStep(0)}
-                        onPressBackArray={onPressBackArray}
-                    />
-                </View>
                 <FooterButton
                     display={display}
                     buttonContent="로그인"
                     onPressButton={onPressLogin}
                     isTop
                 />
-                 <Modal 
-                            visible={isModal}
-                            presentationStyle="overFullScreen"
-                            transparent={true}
-                            >
-                                <View
-                                onResponderEnd={() => setIsModal(false)}
-                                style={{flex:1,backgroundColor:"rgba(0,0,0,0.5)",justifyContent:"center",alignContent:"center"}}
-                                >
-                                    <View style={{borderColor:theme.colors.borderGray,borderWidth:1,margin:20,borderRadius:15,backgroundColor:"white"}}>
-                                <Picker
+                <Modal visible={isModal} presentationStyle="overFullScreen" transparent={true}>
+                    <View
+                        onResponderEnd={() => setIsModal(false)}
+                        style={{
+                            flex: 1,
+                            backgroundColor: 'rgba(0,0,0,0.5)',
+                            justifyContent: 'center',
+                            alignContent: 'center',
+                        }}>
+                        <View
+                            style={{
+                                borderColor: theme.colors.borderGray,
+                                borderWidth: 1,
+                                margin: 20,
+                                borderRadius: 15,
+                                backgroundColor: 'white',
+                            }}>
+                            <Picker
                                 onValueChange={setSelectFacilityNum}
                                 selectedValue={selectFacilityNum}
-                                itemStyle={{fontSize:16}}
+                                itemStyle={{fontSize: 16}}
                                 mode="dialog"
                                 dropdownIconColor={theme.colors.blue}
                                 dropdownIconRippleColor={theme.colors.blue}
-                                itemStyle={{fontSize:16}}>
+                                itemStyle={{fontSize: 16}}>
                                 <Picker.Item
                                     label={'아파트를 선택해주세요.'}
                                     value=""
@@ -262,17 +286,17 @@ console.log(facilityList,selectFacilityNum)
                                     />
                                 ))}
                             </Picker>
-                            <View style={{position:"absolute",bottom:-80}}>
-                            <TouchableOpacity style={styles.ButtonTouch} onPress={() => setIsModal(false)}>
-                <Text style={styles.ButtonText}>선택</Text>
-            </TouchableOpacity>
-                                </View>
+                            <View style={{position: 'absolute', bottom: -80}}>
+                                <TouchableOpacity
+                                    style={styles.ButtonTouch}
+                                    onPress={() => setIsModal(false)}>
+                                    <Text style={styles.ButtonText}>선택</Text>
+                                </TouchableOpacity>
                             </View>
-                            
-                            </View>
-                                </Modal>
+                        </View>
+                    </View>
+                </Modal>
             </MainContainer>
-           
         </>
     );
 }
@@ -300,7 +324,7 @@ const styles = StyleSheet.create({
     Input: {
         flex: 1,
         height: 50,
-        maxHeight:50,
+        maxHeight: 50,
         fontSize: theme.size.sm,
         color: theme.colors.black,
         borderWidth: 1,
@@ -338,16 +362,15 @@ const styles = StyleSheet.create({
     },
     LoginBox: {
         position: 'relative',
-
     },
     ButtonTouch: {
         width: '100%',
         height: '100%',
         justifyContent: 'center',
         alignItems: 'center',
-        width:screenWidth-40,
+        width: screenWidth - 40,
         height: 50,
-        borderRadius:10,
+        borderRadius: 10,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: theme.colors.blue,
@@ -356,10 +379,10 @@ const styles = StyleSheet.create({
         color: theme.colors.white,
         fontSize: theme.size.base,
     },
-    PlaceholderText:{
+    PlaceholderText: {
         color: theme.colors.textGray,
     },
-    ValueText:{
-        color:theme.colors.black
-    }
+    ValueText: {
+        color: theme.colors.black,
+    },
 });

@@ -44,11 +44,9 @@ export default function Check({navigation}) {
                 </View>
                 <Text style={styles.SubLastText}>{facility.ft_check_guide}</Text>
                 <FooterButton
-                buttonContent="다음"
-                onPressButton={() => navigation.navigate('CheckCalender')}></FooterButton>
+                    buttonContent="다음"
+                    onPressButton={() => navigation.navigate('CheckCalender')}></FooterButton>
             </MainContainer>
-
-       
         </>
     );
 }
@@ -109,11 +107,13 @@ const styles = StyleSheet.create({
     },
     TermTitleText: {
         fontWeight: theme.weight.bold,
+        color: theme.colors.black,
         fontSize: theme.size.sm,
     },
     TermDateText: {
         marginTop: 5,
         fontSize: theme.size.sm,
+        color: theme.colors.black,
         fontWeight: theme.weight.normal,
     },
 });

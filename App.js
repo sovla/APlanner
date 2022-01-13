@@ -19,6 +19,7 @@ const useMount = func => useEffect(() => func(), []);
 const useInitialURL = () => {
     const [url, setUrl] = useState(null);
     const [processing, setProcessing] = useState(true);
+    console.log(url, 'url');
     useMount(() => {
         const getUrlAsync = async () => {
             // Get the deep link used to open the app
@@ -41,6 +42,7 @@ export default function App() {
     const [facilityNum, setFacilityNum] = useState();
     const [isRender, setIsRender] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+
     useEffect(() => {
         isLoading &&
             setTimeout(() => {
@@ -56,7 +58,7 @@ export default function App() {
         setTimeout(() => {
             SplashScreen.hide();
             setIsLoading(true);
-        }, 300);
+        }, 1000);
     }, [processing]);
 
     useEffect(() => {

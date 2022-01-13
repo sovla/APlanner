@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Alert, StyleSheet, Text, View} from 'react-native';
+import {Alert, ScrollView, StyleSheet, Text, View} from 'react-native';
 import theme from '../../assets/css/theme';
 import FooterButton from '../layout/FooterButton';
 import Modal from '../Check/Modal';
@@ -62,20 +62,22 @@ export default function ReservationTime({
                 HeaderTitle="사전점검 방문예약"
                 Notice="방문 시간을 선택해 주세요"
                 Back={BackFn(navigation)}>
-                <View style={styles.Container}>
-                    <Text style={styles.MainText}>{selectDate}</Text>
-                    <SelectTime
-                        data={array}
-                        clickButton={clickButton}
-                        selectItem={checkDate.selectTime}></SelectTime>
-                    <SelectReferenceText
-                        leftColor={theme.colors.blue}
-                        rightColor={theme.colors.gray}
-                        leftContent="선택가능"
-                        rightContent="선택불가"
-                        depscription={guideMessage}
-                    />
-                </View>
+                <ScrollView>
+                    <View style={styles.Container}>
+                        <Text style={styles.MainText}>{selectDate}</Text>
+                        <SelectTime
+                            data={array}
+                            clickButton={clickButton}
+                            selectItem={checkDate.selectTime}></SelectTime>
+                        <SelectReferenceText
+                            leftColor={theme.colors.blue}
+                            rightColor={theme.colors.gray}
+                            leftContent="선택가능"
+                            rightContent="선택불가"
+                            depscription={guideMessage}
+                        />
+                    </View>
+                </ScrollView>
 
                 <Modal
                     isVisible={isVisible}
@@ -84,7 +86,6 @@ export default function ReservationTime({
                 />
                 <FooterButton onPressButton={saveButtonClick} buttonContent="저장" />
             </MainContainer>
-            
         </>
     );
 }
