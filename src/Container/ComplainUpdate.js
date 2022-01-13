@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, Image, StyleSheet, TouchableOpacity, Alert} from 'react-native';
+import {View, Text, Image,TextInput, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import addIcon from '../assets/images/addIcon.png';
 import theme from '../assets/css/theme';
 import FloorPlan from '../assets/images/floor_plan.jpg';
@@ -7,7 +7,6 @@ import {BackFn} from '../utils/BackFunction';
 import MainContainer from './MainContainer';
 import PickerText from '../Component/Complain/PickerText';
 
-import {TextInput} from 'react-native-gesture-handler';
 import ImageCropPicker from 'react-native-image-crop-picker';
 import UploadImageBox from '../Component/Complain/UploadImageBox';
 import {RowContainer} from '../assets/css/component.style';

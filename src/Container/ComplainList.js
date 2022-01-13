@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Alert, BackHandler, Dimensions, Image, StyleSheet, Text, View} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {Alert, TouchableOpacity, Dimensions, Image, StyleSheet, Text, View} from 'react-native';
 import MainContainer from './MainContainer';
 import {RowContainer, Width100} from '../assets/css/component.style';
 import theme from '../assets/css/theme';

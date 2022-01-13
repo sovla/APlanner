@@ -30,6 +30,7 @@ import Loading from '../State/Atom/Loading';
 import LoginModal from '../Component/Login/LoginModal';
 import {useFocusEffect} from '@react-navigation/core';
 import {Picker} from '@react-native-picker/picker';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 let exitApp;
 const screenWidth = Dimensions.get('window').width;
@@ -56,7 +57,6 @@ export default function Login({navigation}) {
 
     const setChangeFacility = useSetRecoilState(ChangeFacility);
     const onPressBackArray = () => {
-        console.log('click');
         setModalStep(0);
     };
     const onPressLogin = async () => {
@@ -73,11 +73,7 @@ export default function Login({navigation}) {
                         return null;
                     }
                 } else {
-                    console.log(
-                        facility?.idx,
-                        selectFacilityNum,
-                        facility?.idx !== selectFacilityNum,
-                    );
+                    
                     if (facility?.idx !== selectFacilityNum) {
                         if (selectFacilityNum === '') {
                             setChangeFacility(true);
@@ -150,14 +146,12 @@ export default function Login({navigation}) {
             .then(res => res?.data?.result === 'true' && res.data.data)
             .then(data => setFacilityList(data));
     }, []);
-    console.log(facilityList, selectFacilityNum);
     return (
         <>
             <MainContainer
                 HeaderTitle="로그인"
                 Notice="고객님의 정보를 입력해 주세요"
                 Back={BackFn(navigation)}>
-                <ScrollView style={{flex: 1}}>
                     <View style={styles.Container}>
                         {Platform.OS === 'android' ? (
                             <Text style={MainButton} onPress={onPressLogin}>
@@ -238,7 +232,6 @@ export default function Login({navigation}) {
                             onPressBackArray={onPressBackArray}
                         />
                     </View>
-                </ScrollView>
 
                 <FooterButton
                     display={display}

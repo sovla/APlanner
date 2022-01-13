@@ -3,7 +3,7 @@ import {ImageBackground, StyleSheet, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../Component/layout/Header';
 import Title from '../Component/layout/Title';
-import SplashImage from '../assets/images/splash.png';
+import SplashImage from '../assets/images/splashSmall.png';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {useRecoilValue} from 'recoil';
 import Loading from '../State/Atom/Loading';

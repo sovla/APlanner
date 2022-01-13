@@ -30,6 +30,7 @@ const Stack = createNativeStackNavigator();
 
 const Container = ({initialUrl}) => {
     const [facility, setFacility] = useRecoilState(Facility);
+    console.log(facility)
     const [inquiryChange, setInqueryChange] = useRecoilState(InquiryChange);
     const [inquiry, setInquiry] = useRecoilState(Inquiry);
     const [changeFacility, setChangeFacility] = useRecoilState(ChangeFacility);

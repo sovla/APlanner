@@ -62,7 +62,8 @@ export default function App() {
     }, [processing]);
 
     useEffect(() => {
-        dynamicLinks_handle();
+        
+        Platform.OS==="android" && dynamicLinks_handle();
     }, []);
 
     const dynamicLinks_handle = async () => {
