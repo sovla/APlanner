@@ -31,6 +31,7 @@ import LoginModal from '../Component/Login/LoginModal';
 import {useFocusEffect} from '@react-navigation/core';
 import {Picker} from '@react-native-picker/picker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 let exitApp;
 const screenWidth = Dimensions.get('window').width;
@@ -48,6 +49,7 @@ export default function Login({navigation}) {
     const [facilityList, setFacilityList] = useState([]); // 시설리스트
     const [isModal, setIsModal] = useState(false);
     const [user, setUser] = useRecoilState(User);
+    const [loading,setLoading] = useState(false);
 
     const [facility, setFacility] = useRecoilState(Facility);
 
@@ -142,9 +144,12 @@ export default function Login({navigation}) {
         }, []),
     );
     useEffect(() => {
+        
+        setLoading(true)
         API.post('select_facility_list.php')
             .then(res => res?.data?.result === 'true' && res.data.data)
-            .then(data => setFacilityList(data));
+            .then(data => setFacilityList(data)).finally(()=>setLoading(false));
+            
     }, []);
     return (
         <>
@@ -239,6 +244,7 @@ export default function Login({navigation}) {
                     onPressButton={onPressLogin}
                     isTop
                 />
+                <Spinner visible={loading} />
                 <Modal visible={isModal} presentationStyle="overFullScreen" transparent={true}>
                     <View
                         onResponderEnd={() => setIsModal(false)}

@@ -24,10 +24,10 @@ export default function Title({children, Notice}) {
 
 const styles = StyleSheet.create({
     MainView:{
-        flex:1
+        flex:1,
     },
     MainContainer: {
-        flex:1
+        flex:1,
     },
     TextContainer: {
         height: 88,
@@ -42,7 +42,8 @@ const styles = StyleSheet.create({
     // 51 88 139  156
     ChildrenContainer: {
         paddingBottom:80,
-        minHeight:screenHeight - 256,
+        minHeight:screenHeight-256 ,
+        
         backgroundColor: theme.colors.white,
     },
 });
