@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, StyleSheet, Text, View,TouchableOpacity} from 'react-native';
+import {Image, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import theme from '../../assets/css/theme';
 import BackIcon from '../../assets/images/back.png';
 
@@ -30,7 +30,7 @@ export default function Header({HeaderTitle, Back = {isBack: false}}) {
 
 const styles = StyleSheet.create({
     Container: {
-        height: 51,
+        height: 50,
         borderBottomWidth: 1,
         borderBottomColor: '#82A6FB',
     },

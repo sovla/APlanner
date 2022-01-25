@@ -30,7 +30,6 @@ const Stack = createNativeStackNavigator();
 
 const Container = ({initialUrl}) => {
     const [facility, setFacility] = useRecoilState(Facility);
-    console.log(facility)
     const [inquiryChange, setInqueryChange] = useRecoilState(InquiryChange);
     const [inquiry, setInquiry] = useRecoilState(Inquiry);
     const [changeFacility, setChangeFacility] = useRecoilState(ChangeFacility);
@@ -46,9 +45,9 @@ const Container = ({initialUrl}) => {
             const formData = new FormData();
             formData.append('ft_idx', ft_idx);
 
-            const res = await API.post('select_facility.php', formData)
-                .then(res => (res.data.result ? setFacility(res.data.data) : console.log(res)))
-                .catch(err => console.log(err));
+            const res = await API.post('select_facility.php', formData).then(res =>
+                res.data.result ? setFacility(res.data.data) : console.log(res),
+            );
         } catch (error) {
             Alert.alert('네트워크 오류', '현장 정보를 가져오지 못하였습니다.');
         }

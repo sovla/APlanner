@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image, Alert, Dimensions} from 'react-native';
+import {View, Text, StyleSheet, Image, Alert, Dimensions, ActivityIndicator} from 'react-native';
 import {useRecoilValue} from 'recoil';
 import theme from '../../assets/css/theme';
 import DummyImage from '../../assets/images/logo.png';

@@ -100,7 +100,6 @@ export default function CalendarComponent({
         setCheckDate({selectDate: day.dateString});
     };
     const currentDate = new Date() < new Date(STARTDATE) ? new Date(STARTDATE) : new Date();
-    console.log(markedDates);
     return (
         <>
             <MainContainer

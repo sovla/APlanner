@@ -21,7 +21,6 @@ export default function Check({navigation}) {
             selectTime: '',
         });
     }, []);
-    console.log(facility);
     return (
         <>
             <MainContainer

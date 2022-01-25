@@ -1,16 +1,24 @@
 import React from 'react';
-import {Dimensions, Platform, ScrollView, ScrollViewBase, StyleSheet, Text, View} from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {
+    Dimensions,
+    Platform,
+    ScrollView,
+    ScrollViewBase,
+    StyleSheet,
+    Text,
+    View,
+} from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import theme from '../../assets/css/theme';
 import BorderView from './BorderView';
 
 const screenHeight = Dimensions.get('window').height;
 export default function Title({children, Notice}) {
-    const RenderView = Platform.OS === "android" ? View:KeyboardAwareScrollView
+    const RenderView =
+        Platform.OS === 'android' ? KeyboardAwareScrollView : KeyboardAwareScrollView;
     return (
         <View style={styles.MainView}>
-            <RenderView style={styles.MainContainer}
-            >
+            <RenderView style={styles.MainContainer}>
                 <View style={styles.TextContainer}>
                     <Text style={styles.NoticeText}>{Notice}</Text>
                 </View>
@@ -23,11 +31,11 @@ export default function Title({children, Notice}) {
 }
 
 const styles = StyleSheet.create({
-    MainView:{
-        flex:1,
+    MainView: {
+        flex: 1,
     },
     MainContainer: {
-        flex:1,
+        flex: 1,
     },
     TextContainer: {
         height: 88,
@@ -41,9 +49,10 @@ const styles = StyleSheet.create({
     },
     // 51 88 139  156
     ChildrenContainer: {
-        paddingBottom:80,
-        minHeight:screenHeight-256 ,
-        
+        paddingBottom: 80,
+        minHeight: screenHeight - (Platform.OS === 'android' ? 230 : 256),
+        flex: 1,
+
         backgroundColor: theme.colors.white,
     },
 });

@@ -18,7 +18,7 @@ export default function MainContainer({children, HeaderTitle, Notice, Back}) {
                     <Title Notice={Notice} children={children} />
                 </ImageBackground>
             </View>
-            <Spinner visible={isLoading}></Spinner>
+            {isLoading && <Spinner visible />}
         </SafeAreaView>
     );
 }
