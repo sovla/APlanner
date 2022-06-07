@@ -211,9 +211,9 @@ const styles = StyleSheet.create({
 });
 
 const GetDateRange = (startDate, endDate) => {
-    let dateMove = startDate;
+    const dateMove = startDate;
     let strDate = startDate.toISOString().slice(0, 10);
-    let listDate = [];
+    const listDate = [];
 
     if (startDate == endDate) {
         return strDate;
